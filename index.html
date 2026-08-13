@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ludo Classic - Professional Board Game</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Google Fonts: Inter & Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <!-- Game Custom Design System Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "ludo-red": "#da3433",
+            "ludo-green": "#388e3c",
+            "ludo-yellow": "#f8bd2a",
+            "ludo-blue": "#005dac",
+            "primary": "#005dac",
+            "primary-container": "#1976d2",
+            "on-primary": "#ffffff",
+            "secondary": "#b6171e",
+            "surface": "#f9f9f9",
+            "surface-container": "#eeeeee",
+            "surface-variant": "#e2e2e2",
+            "on-surface": "#1a1c1c",
+            "on-surface-variant": "#414752",
+            "outline": "#717783",
+            "outline-variant": "#c1c6d4"
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col overflow-x-hidden">
+
+  <!-- ========================================== -->
+  <!-- 1. HOME SCREEN                             -->
+  <!-- ========================================== -->
+  <div id="home-screen" class="min-h-screen flex flex-col justify-between">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-surface border-b border-outline-variant shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden shadow-sm flex items-center justify-center bg-primary/10">
+          <span class="material-symbols-outlined text-primary text-2xl">account_circle</span>
+        </div>
+        <h1 class="text-xl font-bold text-primary">Ludo Classic</h1>
+      </div>
+      <button class="btn-open-settings p-2 rounded-full hover:bg-surface-variant transition-colors text-primary">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+      </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-20 pb-24 px-4 max-w-2xl mx-auto w-full flex flex-col gap-5 justify-center">
+      <!-- Hero Logo -->
+      <div class="flex flex-col items-center justify-center pt-4 pb-2">
+        <div class="w-24 h-24 bg-surface rounded-2xl shadow-lg border-2 border-outline-variant flex items-center justify-center relative overflow-hidden mb-3 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+          <div class="absolute inset-0 bg-gradient-to-br from-surface to-surface-variant opacity-60"></div>
+          <div class="grid grid-cols-2 gap-2 relative z-10">
+            <div class="w-4 h-4 bg-ludo-red rounded-full shadow-sm"></div>
+            <div class="w-4 h-4 bg-ludo-blue rounded-full shadow-sm"></div>
+            <div class="w-4 h-4 bg-ludo-yellow rounded-full shadow-sm"></div>
+            <div class="w-4 h-4 bg-ludo-green rounded-full shadow-sm"></div>
+          </div>
+        </div>
+        <h2 class="text-2xl font-extrabold text-on-surface">Classic Digital Edition</h2>
+        <p class="text-sm text-on-surface-variant">Tactile, Modern Board Game</p>
+      </div>
+
+      <!-- Mode Cards Bento Grid -->
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Online Multiplayer -->
+        <button id="btn-play-online" class="col-span-2 bg-primary text-on-primary rounded-xl p-5 shadow-lg tactile-button flex items-center justify-between group">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner">
+              <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">public</span>
+            </div>
+            <div class="flex flex-col items-start text-left">
+              <span class="text-lg font-bold">Online Match</span>
+              <span class="text-xs text-blue-100">Play with friends worldwide</span>
+            </div>
+          </div>
+          <span class="material-symbols-outlined opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all">chevron_right</span>
+        </button>
+
+        <!-- Play with Friends -->
+        <button id="btn-play-friends" class="bg-surface text-on-surface border border-outline-variant rounded-xl p-4 shadow-sm tactile-button flex flex-col items-center justify-center gap-2 hover:bg-surface-container">
+          <div class="text-primary bg-blue-100 p-3 rounded-full">
+            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">group</span>
+          </div>
+          <span class="text-sm font-bold text-center">Play Friends</span>
+        </button>
+
+        <!-- Computer -->
+        <button id="btn-play-computer" class="bg-surface text-on-surface border border-outline-variant rounded-xl p-4 shadow-sm tactile-button flex flex-col items-center justify-center gap-2 hover:bg-surface-container">
+          <div class="text-ludo-red bg-red-100 p-3 rounded-full">
+            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+          </div>
+          <span class="text-sm font-bold text-center">Vs Computer</span>
+        </button>
+
+        <!-- Pass & Play -->
+        <button id="btn-pass-play" class="col-span-2 bg-surface text-on-surface border border-outline-variant rounded-xl p-4 shadow-sm tactile-button flex items-center justify-center gap-3 hover:bg-surface-container">
+          <span class="material-symbols-outlined text-on-surface-variant">devices</span>
+          <span class="text-sm font-bold">Local Pass &amp; Play (2-4 Players)</span>
+        </button>
+      </div>
+
+      <!-- Secondary Widgets: Daily Reward & Stats -->
+      <div class="grid grid-cols-2 gap-4 items-stretch">
+        <!-- Daily Rewards -->
+        <div class="bg-amber-100 text-amber-950 rounded-xl p-4 shadow-sm border border-amber-300 flex flex-col justify-between relative overflow-hidden">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="material-symbols-outlined text-amber-600" style="font-variation-settings: 'FILL' 1;">stars</span>
+            <span class="text-sm font-bold">Daily Reward</span>
+          </div>
+          <div class="flex items-end justify-between">
+            <div>
+              <span class="text-xs text-amber-800">Bonus</span>
+              <div class="text-lg font-extrabold">+500 Coins</div>
+            </div>
+            <button id="btn-claim-reward" class="bg-amber-600 text-white rounded-full px-3 py-1 text-xs font-bold shadow-sm hover:bg-amber-700 tactile-button">
+              Claim
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats Widget -->
+        <div class="bg-surface border border-outline-variant rounded-xl p-4 shadow-sm flex flex-col justify-between">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+            <span class="text-sm font-bold text-on-surface">Your Stats</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex flex-col">
+              <span class="text-xs text-on-surface-variant">Wins</span>
+              <span id="stat-wins" class="text-lg font-bold text-primary">14</span>
+            </div>
+            <div class="w-px h-6 bg-outline-variant"></div>
+            <div class="flex flex-col">
+              <span class="text-xs text-on-surface-variant">Coins</span>
+              <span id="stat-coins" class="text-lg font-bold text-amber-600">1200</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 pb-4 px-4 bg-surface shadow-[0_-2px_10px_rgba(0,0,0,0.05)] border-t border-outline-variant">
+      <a class="flex flex-col items-center text-primary font-bold text-xs" href="#">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+        <span>Home</span>
+      </a>
+      <a class="flex flex-col items-center text-on-surface-variant text-xs hover:text-primary transition-colors" href="#" onclick="ui.openLobby('vs-ai')">
+        <span class="material-symbols-outlined">smart_toy</span>
+        <span>Vs AI</span>
+      </a>
+      <a class="flex flex-col items-center text-on-surface-variant text-xs hover:text-primary transition-colors" href="#" onclick="ui.openLobby('pass-play')">
+        <span class="material-symbols-outlined">group</span>
+        <span>Pass &amp; Play</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. LOBBY / PLAYER SELECTION SCREEN         -->
+  <!-- ========================================== -->
+  <div id="lobby-screen" class="min-h-screen flex flex-col justify-between pt-16 pb-8 hidden">
+    <!-- Top Bar -->
+    <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-surface border-b border-outline-variant shadow-sm">
+      <div class="flex items-center gap-3">
+        <button id="btn-back-lobby" class="p-2 rounded-full hover:bg-surface-variant transition-colors text-primary">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 class="text-xl font-bold text-primary">Match Setup</h1>
+      </div>
+      <button class="btn-open-settings p-2 rounded-full hover:bg-surface-variant transition-colors text-on-surface-variant">
+        <span class="material-symbols-outlined">settings</span>
+      </button>
+    </header>
+
+    <main class="flex-1 flex flex-col items-center px-4 py-6 max-w-3xl mx-auto w-full gap-6">
+      <div class="text-center">
+        <h2 class="text-2xl font-bold text-on-surface">Choose Player Slots</h2>
+        <p class="text-sm text-on-surface-variant mt-1">Configure human or computer opponents for each color.</p>
+      </div>
+
+      <!-- Color Slots Grid (Red, Green, Yellow, Blue) -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+        <!-- Red Slot -->
+        <div id="lobby-slot-red" class="bg-surface-container rounded-xl flex flex-col items-center justify-between min-h-[210px] shadow-sm border border-outline-variant p-3">
+        </div>
+        <!-- Green Slot -->
+        <div id="lobby-slot-green" class="bg-surface-container rounded-xl flex flex-col items-center justify-between min-h-[210px] shadow-sm border border-outline-variant p-3">
+        </div>
+        <!-- Yellow Slot -->
+        <div id="lobby-slot-yellow" class="bg-surface-container rounded-xl flex flex-col items-center justify-between min-h-[210px] shadow-sm border border-outline-variant p-3">
+        </div>
+        <!-- Blue Slot -->
+        <div id="lobby-slot-blue" class="bg-surface-container rounded-xl flex flex-col items-center justify-between min-h-[210px] shadow-sm border border-outline-variant p-3">
+        </div>
+      </div>
+
+      <!-- Game Mode Toggle Card -->
+      <div class="w-full max-w-md bg-surface-container-low rounded-xl p-5 shadow-sm border border-outline-variant flex flex-col gap-3">
+        <h3 class="text-lg font-bold text-on-surface text-center">Game Rules Mode</h3>
+        <div class="flex rounded-lg bg-surface-variant p-1 relative">
+          <button class="mode-toggle-btn flex-1 py-2.5 text-sm font-bold text-on-surface bg-surface rounded-md shadow-sm transition-all" data-mode="classic">
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">stars</span>
+            Classic
+          </button>
+          <button class="mode-toggle-btn flex-1 py-2.5 text-sm font-bold text-on-surface-variant rounded-md transition-all" data-mode="quick">
+            <span class="material-symbols-outlined text-sm">bolt</span>
+            Quick
+          </button>
+        </div>
+        <p id="mode-description" class="text-xs text-on-surface-variant text-center">
+          Standard rules. Tokens must roll a 6 to enter the board.
+        </p>
+      </div>
+
+      <!-- Start Game Button -->
+      <div class="w-full max-w-md mt-auto">
+        <button id="btn-start-game" class="w-full py-4 bg-primary text-on-primary rounded-full shadow-lg text-lg font-extrabold tactile-button hover:bg-primary-container transition-colors flex items-center justify-center gap-2">
+          START GAME
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 3. GAME BOARD SCREEN                       -->
+  <!-- ========================================== -->
+  <div id="game-screen" class="min-h-screen flex flex-col justify-between pt-16 pb-24 hidden relative">
+    <!-- Top Bar -->
+    <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-surface border-b border-outline-variant shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="w-3 h-3 rounded-full bg-primary" id="turn-color-dot"></div>
+        <h1 class="text-lg font-bold text-primary">Ludo Classic</h1>
+      </div>
+      <div class="flex items-center gap-2">
+        <span id="turn-player-name" class="text-sm font-bold text-on-surface">Player 1 Turn</span>
+        <button id="btn-pause-game" class="p-2 rounded-full hover:bg-surface-variant transition-colors text-on-surface-variant">
+          <span class="material-symbols-outlined">pause</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-1 flex flex-col items-center justify-center px-2 py-4 max-w-2xl mx-auto w-full gap-3">
+      <!-- Player Indicators (Top Bar for Green & Red) -->
+      <div class="w-full max-w-[580px] flex justify-between items-center px-2">
+        <div id="player-panel-red" class="flex items-center gap-2 bg-surface-container rounded-full px-3 py-1 shadow-sm border border-outline-variant">
+          <div class="w-7 h-7 rounded-full bg-ludo-red text-white flex items-center justify-center font-bold text-xs">P1</div>
+          <span class="text-xs font-bold text-on-surface">Red</span>
+        </div>
+        <div id="player-panel-green" class="flex items-center gap-2 bg-surface-container rounded-full px-3 py-1 shadow-sm border border-outline-variant">
+          <span class="text-xs font-bold text-on-surface">Green</span>
+          <div class="w-7 h-7 rounded-full bg-ludo-green text-white flex items-center justify-center font-bold text-xs">P2</div>
+        </div>
+      </div>
+
+      <!-- 15x15 Ludo Board -->
+      <div class="ludo-board-wrapper">
+        <div id="ludo-board" class="ludo-board">
+          <!-- Dynamically populated via js/ui.js -->
+        </div>
+      </div>
+
+      <!-- Player Indicators (Bottom Bar for Blue & Yellow) -->
+      <div class="w-full max-w-[580px] flex justify-between items-center px-2">
+        <div id="player-panel-blue" class="flex items-center gap-2 bg-surface-container rounded-full px-3 py-1 shadow-sm border border-outline-variant">
+          <div class="w-7 h-7 rounded-full bg-ludo-blue text-white flex items-center justify-center font-bold text-xs">P4</div>
+          <span class="text-xs font-bold text-on-surface">Blue</span>
+        </div>
+        <div id="player-panel-yellow" class="flex items-center gap-2 bg-surface-container rounded-full px-3 py-1 shadow-sm border border-outline-variant">
+          <span class="text-xs font-bold text-on-surface">Yellow</span>
+          <div class="w-7 h-7 rounded-full bg-ludo-yellow text-white flex items-center justify-center font-bold text-xs">P3</div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Dice Controls Bar -->
+    <div class="fixed bottom-0 left-0 w-full p-4 flex items-center justify-center bg-surface/90 backdrop-blur-md border-t border-outline-variant z-40">
+      <div class="flex items-center gap-4">
+        <!-- 3D Dice Graphic -->
+        <div id="dice-element" class="dice-container">
+          <div class="dice-pip-grid">
+            <div></div><div></div><div></div>
+            <div></div><div class="pip"></div><div></div>
+            <div></div><div></div><div></div>
+          </div>
+        </div>
+
+        <!-- Roll Button -->
+        <button id="btn-roll-dice" class="bg-primary text-on-primary font-bold text-base px-6 py-3 rounded-xl shadow-md hover:bg-primary-container tactile-button flex items-center gap-2">
+          <span>Roll Dice</span>
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">casino</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODALS                                     -->
+  <!-- ========================================== -->
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-surface rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-outline-variant flex flex-col gap-4">
+      <div class="flex justify-between items-center border-b border-outline-variant pb-3">
+        <h3 class="text-lg font-bold text-on-surface">Settings</h3>
+        <button id="btn-close-settings" class="text-on-surface-variant hover:text-on-surface">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <div class="flex justify-between items-center py-2">
+        <span class="font-bold text-sm">Sound Effects</span>
+        <button id="btn-toggle-sound" class="bg-primary text-on-primary px-4 py-1.5 rounded-full text-xs font-bold shadow-sm">
+          Sound: <span id="sound-status">ON</span>
+        </button>
+      </div>
+
+      <div class="flex justify-between items-center py-2 border-t border-outline-variant">
+        <span class="font-bold text-sm">Game Rules</span>
+        <span class="text-xs text-on-surface-variant">Classic 15x15 Ludo</span>
+      </div>
+
+      <button onclick="document.getElementById('settings-modal').classList.add('hidden')" class="w-full mt-2 py-3 bg-surface-variant text-on-surface rounded-xl font-bold text-sm hover:bg-surface-container">
+        Close Settings
+      </button>
+    </div>
+  </div>
+
+  <!-- Pause Modal -->
+  <div id="pause-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-surface rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-outline-variant flex flex-col gap-4 text-center">
+      <h3 class="text-xl font-bold text-on-surface">Game Paused</h3>
+      <p class="text-sm text-on-surface-variant">Take a break or return to the main menu.</p>
+      
+      <button id="btn-resume-game" class="w-full py-3 bg-primary text-on-primary rounded-xl font-bold text-base shadow-md hover:bg-primary-container">
+        Resume Game
+      </button>
+      <button id="btn-exit-game" class="w-full py-3 bg-error text-on-error rounded-xl font-bold text-base hover:bg-error-container hover:text-error">
+        Quit to Main Menu
+      </button>
+    </div>
+  </div>
+
+  <!-- Victory Podium Modal -->
+  <div id="victory-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-surface rounded-2xl p-6 max-w-md w-full shadow-2xl border border-outline-variant flex flex-col gap-4 text-center">
+      <div class="text-4xl">🏆</div>
+      <h3 class="text-2xl font-extrabold text-primary">Match Finished!</h3>
+      <p class="text-sm text-on-surface-variant">Final Player Rankings</p>
+
+      <div id="victory-podium" class="flex flex-col gap-2 my-2">
+        <!-- Dynamically rendered by js/ui.js -->
+      </div>
+
+      <div class="flex gap-3 mt-4">
+        <button id="btn-victory-home" class="flex-1 py-3 bg-surface-variant text-on-surface font-bold rounded-xl hover:bg-surface-container">
+          Main Menu
+        </button>
+        <button id="btn-play-again" class="flex-1 py-3 bg-primary text-on-primary font-bold rounded-xl shadow-md hover:bg-primary-container">
+          Play Again
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ui.js"></script>
+
+</body>
+</html>
